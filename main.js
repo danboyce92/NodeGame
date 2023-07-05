@@ -1,4 +1,5 @@
 const prompt = require('prompt-sync')({ sigint: true });
+const { generateField } = require('./generateField.js');
 
 const hat = '^';
 const hole = 'O';
@@ -10,8 +11,8 @@ let gameOver = false;
 class Field {
   constructor(field) {
     this.field = field;
-    this.x = 0;
-    this.y = 0;
+    this.x = gameField[1];
+    this.y = gameField[2];
     this.playerPosition = [this.x, this.y];
     this.prevPosition = [0, 0];
   }
@@ -51,11 +52,13 @@ class Field {
       this.x >= this.field.length ||
       this.y >= this.field.length
     ) {
+      console.log('You have moved out of bounds!');
       gameOver = true;
     }
 
     //Are you in a hole?
     if (this.field[this.playerPosition[0]][this.playerPosition[1]] === 'O') {
+      console.log('You have fallen into a hole!');
       gameOver = true;
     }
 
@@ -73,11 +76,8 @@ class Field {
 }
 
 //Instanciate the game below
-const myField = new Field([
-  [pathCharacter, fieldCharacter, hole],
-  [fieldCharacter, fieldCharacter, hole],
-  [hole, fieldCharacter, hat],
-]);
+const gameField = generateField(4);
+const myField = new Field(gameField[0]);
 
 const playGame = () => {
   while (!gameOver) {

@@ -13,7 +13,7 @@ class Field {
     this.x = 0;
     this.y = 0;
     this.playerPosition = [this.x, this.y];
-    this.prevPosition = [this.x, this.y];
+    this.prevPosition = [0, 0];
   }
 
   print() {
@@ -28,29 +28,45 @@ class Field {
     );
     switch (turn) {
       case 'r':
-        this.playerPosition = [this.x, this.y + 1];
+        this.y++;
+        this.playerPosition = [this.x, this.y];
         break;
       case 'l':
-        this.playerPosition = [this.x, this.y - 1];
+        this.y--;
+        this.playerPosition = [this.x, this.y];
         break;
       case 'u':
-        this.playerPosition = [this.x - 1, this.y];
+        this.x--;
+        this.playerPosition = [this.x, this.y];
         break;
       case 'd':
-        this.playerPosition = [this.x + 1, this.y];
+        this.x++;
+        this.playerPosition = [this.x, this.y];
         break;
     }
     //Check for out of bounds move
     if (
-      this.playerPosition !== this.prevPosition &&
-      this.field[this.playerPosition[0]][this.field[1]] === 'O'
+      this.x < 0 ||
+      this.y < 0 ||
+      this.x >= this.field.length ||
+      this.y >= this.field.length
     ) {
+      gameOver = true;
+    }
+
+    //Are you in a hole?
+    if (this.field[this.playerPosition[0]][this.playerPosition[1]] === 'O') {
+      gameOver = true;
+    }
+
+    if (this.field[this.playerPosition[0]][this.playerPosition[1]] === '^') {
+      console.log('You found your hat congratulations!');
       gameOver = true;
     }
 
     //update field to reflect changes
     if (this.playerPosition !== this.prevPosition) {
-      this.field[this.playerPosition[0]][this.field[1]] = '*';
+      this.field[this.playerPosition[0]][this.playerPosition[1]] = '*';
       this.prevPosition = this.playerPosition;
     }
   }
@@ -59,7 +75,7 @@ class Field {
 //Instanciate the game below
 const myField = new Field([
   [pathCharacter, fieldCharacter, hole],
-  [hole, fieldCharacter, hole],
+  [fieldCharacter, fieldCharacter, hole],
   [hole, fieldCharacter, hat],
 ]);
 

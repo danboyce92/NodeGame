@@ -1,5 +1,12 @@
 # Find your hat game
 
+## To play
+
+In order to play,
+download this repository,
+open your terminal in the directory with main.js,
+run the command _node main.js_
+
 ## Work notes
 
 _Confusing logic behind the x and y coordinates_
@@ -27,6 +34,6 @@ Now I have the map updating. But the playerPosition seems to reset to [0, 0] aft
 The game functions properly now.
 Things you could add...
 
-- Random map generation is a big one.
-- Random player spawn is another one.
+- Random map generation is a big one. ✓
+- Random player spawn is another one. ✓
 - A continuous loop, score keeping, map gets larger, hole percentage increases.
